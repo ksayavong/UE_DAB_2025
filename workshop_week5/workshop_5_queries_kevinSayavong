@@ -1,0 +1,92 @@
+-- 1. Retrieve the titles and release dates of all songs released in 2022, ordered by release date (newest first).
+
+select title, release_date
+from SONGS
+where release_date like '2022%'
+order by release_date;
+
+-- 2. Find all songs with a popularity score greater than 80 and a duration less than 4 minutes (240 seconds).
+
+select * from songs
+where popularity_score > 80 
+and duration_seconds < 240;
+
+-- 3. List all artists whose names start with "The".
+
+select artist_name from artists
+where artist_name like 'the%'; 
+
+-- 4. Find all premium customers who joined in 2022.
+
+select * from customers 
+where premium_member = 'true'
+and join_date like '2022%';
+
+-- 5. Calculate the total duration (in minutes) of all songs in the database and display the result with an appropriate column name.
+
+select SUM(duration_seconds) / 60.0 AS total_duration_minutes
+from songs;
+
+-- 6. Find the top 5 most expensive song purchases in the database.
+
+select * 
+from purchases
+order by price desc
+limit 5;
+
+-- 7. First, find all song_ids from songs with a popularity score above 90. Then, use those song_ids to find purchases of those songs.
+
+select song_id, popularity_score
+from songs
+where popularity_score > 90;
+
+select * 
+from purchases
+where song_id in (1,3,7,9,11,13,14,19,28,29,32,36)
+order by song_id;
+
+-- 8. Find all purchases made between January 1, 2023 and March 31, 2023.
+
+select * 
+from purchases
+where purchase_date between '2023-01-01' and '2023-03-31'
+order by purchase_date asc;
+
+-- 9. Identify the songs with the highest popularity scores (above 90)
+
+select *
+from songs
+where popularity_score > 90
+order by popularity_score desc;
+
+/* Discussion Questions
+-
+1. In our database design, we separated purchases and streams into different tables. What are the benefits of this approach versus having a single "user_interactions" table?
+Some benefits of separating the data into different tables includes normalization of the data. Keeping separate information separate allows to us to more easily find only the information 
+we are looking for and by easily aggregating data with joins. It keeps the information more clean.
+-
+2. Based on the provided data model, what business questions could music executives answer using SQL queries that we haven't covered in our exercise?
+Which artists have the highest conversion rate? this can be found by calculating the ratio of # of streams to purchses per artist.
+What is the average revenue per user of the premium members? calculate this by joining customers and purchases table and see if the premium members spend more or less on average than non-premium 
+users.
+-
+3. How would you extend this schema to track more detailed user behavior, such as when users skip songs or how much of a song they listen to before skipping?
+We could add a skipped column to the streams table, have it be a boolean data type for true or false if the song has been skipped.
+We could also add a repeated column with integer data type in the streams table to see how many times a song has been played on a repeated loop.
+*/
+-- 4. For tasks 1-3, how could you combine them into a single, more complex query that finds popular short songs by artists whose names start with "The"?
+
+select 
+    s.title,
+    s.release_date, 
+    a.artist_name, 
+    s.popularity_score, 
+    s.duration_seconds
+from songs s
+join artists a on s.artist_id = a.artist_id
+where s.release_date like '2022%'
+    and a.artist_name like 'The%'
+    and s.popularity_score > 80
+    and s.duration_seconds < 240
+order by s.release_date desc;
+-- this query has not results though 
