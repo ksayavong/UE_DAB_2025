@@ -1,0 +1,131 @@
+--1. Basic Selection: Retrieve the titles and publication years of all books published after 2000, ordered by publication year (newest first).
+SELECT title, publication_year
+FROM Books
+WHERE publication_year > 2000
+ORDER BY publication_year DESC;
+
+--2. Filtering: Find all books with more than 5 copies owned in the fiction genre (genre_id = 1).
+SELECT title, copies_owned, genre_id
+FROM Books
+WHERE copies_owned > 5 AND genre_id = 1;
+
+--3. Pattern Matching: List all books whose titles contain the word "History".
+SELECT title, publication_year
+FROM Books
+WHERE title LIKE '%History%';
+
+--4. JOIN Operations: Display loan information (loan_id, checkout_date, due_date) along with patron details (first_name, last_name, email) for all loans made in January 2023.
+SELECT l.loan_id, l.checkout_date, l.due_date, p.first_name, p.last_name, p.email
+FROM Loans l
+JOIN Patrons p ON l.patron_id = p.patron_id
+WHERE l.checkout_date BETWEEN '2023-01-01' AND '2023-01-31';
+
+--5. Multi-table JOIN: Show book details (title, author's full name, genre_name) for each loan, along with the checkout_date and due_date.
+SELECT b.title, a.first_name || ' ' || a.last_name AS author_full_name, g.genre_name, l.checkout_date, l.due_date
+FROM Loans l
+JOIN Books b ON l.book_id = b.book_id
+JOIN Authors a ON b.author_id = a.author_id
+JOIN Genres g ON b.genre_id = g.genre_id;
+
+--6. Self JOIN: Find pairs of patrons who live in the same city. Show both patrons' names and their city.
+SELECT p1.first_name || ' ' || p1.last_name AS patron_1,p2.first_name || ' ' || p2.last_name AS patron_2,p1.city
+FROM Patrons p1
+JOIN Patrons p2 ON p1.city = p2.city
+WHERE p1.patron_id < p2.patron_id;
+
+--7. Multi-table JOIN with filtering: Find all fiction books (genre_id = 1) that have been borrowed, along with the patron name and the branch where they were borrowed from.
+SELECT b.title, p.first_name || ' ' || p.last_name AS patron_name, br.branch_name, b.genre_id
+FROM Loans l
+JOIN Books b ON l.book_id = b.book_id
+JOIN Patrons p ON l.patron_id = p.patron_id
+JOIN Branches br ON l.branch_id = br.branch_id
+WHERE b.genre_id = 1;
+
+--8. COUNT aggregation: Count the number of books in each genre category.
+SELECT g.genre_name, COUNT(b.book_id) AS total_books
+FROM Genres g
+LEFT JOIN Books b ON g.genre_id = b.genre_id
+GROUP BY g.genre_name;
+
+--9. Multiple aggregations: Calculate the average, minimum, and maximum loan duration (days between checkout and return) for each library branch. Include only returned books.
+SELECT 
+br.branch_name,
+AVG(ABS(return_date - checkout_date)) AS avg_loan_duration,
+MIN(ABS(return_date - checkout_date)) AS min_loan_duration,
+MAX(ABS(return_date - checkout_date)) AS max_loan_duration
+FROM Loans l
+JOIN Branches br ON l.branch_id = br.branch_id
+WHERE l.return_date IS NOT NULL
+GROUP BY br.branch_name;
+
+--10. Conditional aggregation: Find patrons with overdue books (due_date < CURRENT_DATE and return_date = ' '), along with the count of overdue books they have.
+SELECT 
+    p.first_name, 
+    p.last_name, 
+    p.email, 
+    COUNT(l.loan_id) AS overdue_count
+FROM Patrons p
+JOIN Loans l ON p.patron_id = l.patron_id
+WHERE l.due_date < CURRENT_DATE AND l.return_date IS NULL
+GROUP BY p.patron_id, p.first_name, p.last_name, p.email;
+
+--11. Time-based analysis: Analyze monthly borrowing trends. Show the year, month, number of loans, and number of unique patrons for each month.
+SELECT 
+    STRFTIME('%Y', checkout_date) AS loan_year,
+    STRFTIME('%m', checkout_date) AS loan_month,
+    COUNT(loan_id) AS total_loans,
+    COUNT(DISTINCT patron_id) AS unique_patrons
+FROM Loans
+GROUP BY loan_year, loan_month
+ORDER BY loan_year DESC, loan_month DESC;
+
+--BONUS. Write a query to create a simple data dictionary for the library database schema, listing table names, column names, data types, and whether they are primary keys. 
+SELECT 
+    table_name, 
+    column_name, 
+    data_type,
+    CASE 
+        WHEN column_name IN (
+            SELECT kcu.column_name 
+            FROM information_schema.table_constraints tc 
+            JOIN information_schema.key_column_usage kcu 
+              ON tc.constraint_name = kcu.constraint_name
+            WHERE tc.constraint_type = 'PRIMARY KEY' 
+              AND tc.table_name = columns.table_name
+        ) THEN 'YES' 
+        ELSE 'NO' 
+    END AS is_primary_key
+FROM information_schema.columns
+WHERE table_schema = 'public' 
+ORDER BY table_name, ordinal_position;
+
+/*Discussion Questions
+1. In our library database, we track which branch a book was borrowed from, but books can exist at multiple branches. How would you modify the schema to track the actual inventory at each branch?
+    We could create an new "Inventory" table with columns for book_id, branch_id, and quantity to show how many of the same book is at each branch. Also can remove copies_owned column form Books table
+--
+2. Based on the provided data model, what business questions could library administrators answer using SQL queries that we haven't covered in our exercise?
+    Based on the volume of traffic at each location, we can estimate staffing needs at each branch location.
+We could also use the information to see if there are any books that are not being checked out and get rid of them in order to make room for new books that might be more popular,
+or see if there are certain authors that are more popular and procure more books from these authors.
+--
+3. How would you extend this schema to track additional patron interactions, such as reserved books, late fees, or participation in library programs?
+    We can add a "Reservatoions" table with columns reservation_id, book_id, patron_id, Request_id, request_date, status in order to track holds.
+We could also make a "Fees" table to can include an amount column taht tracks how much money a person owes. 
+*/
+--4. For tasks 1-3, how could you combine them into a single, more complex query that finds recent history books with multiple copies?
+SELECT 
+    title, 
+    publication_year, 
+    copies_owned, 
+    genre_id
+FROM Books
+WHERE 
+    publication_year > 2000  
+    AND copies_owned > 5      
+    AND title LIKE '%History%'  
+ORDER BY publication_year DESC; 
+
+/*5. What performance considerations should be kept in mind when running complex joins and aggregations on large library datasets?
+    Indexing is important to speeding up searches of large databases. So makeing sure Primary keys and foreign keys are correct is important. 
+Using WHERE to narrow down your dataset as much as possible before joining on a large table will also speed up searches so it does not have to search through the entire table if large.
+Using the correct JOINS for the operation and INNER joins whenever possible because it can automatically discard non-matching rows as compared to outer joins which include some non-matched data. 
