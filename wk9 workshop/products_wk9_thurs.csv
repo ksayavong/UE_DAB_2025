@@ -1,0 +1,61 @@
+product_id,product_name,category,price,launch_date,brand
+1,Wireless Bluetooth Headphones,Electronics,79.99,2021-03-15,AudioTech
+2,Organic Cotton T-Shirt,Clothing,24.99,2021-04-20,EcoWear
+3,Stainless Steel Water Bottle,Home & Garden,19.99,2021-05-10,HydroLife
+4,Leather Crossbody Bag,Accessories,89.99,2021-06-01,StyleCraft
+5,Yoga Mat Premium,Sports & Outdoors,34.99,2021-06-15,FitZone
+6,Smart Fitness Tracker,Electronics,149.99,2021-07-08,TechFit
+7,Ceramic Coffee Mug Set,Home & Garden,29.99,2021-07-22,KitchenPro
+8,Denim Jacket Classic,Clothing,69.99,2021-08-05,UrbanStyle
+9,Wireless Phone Charger,Electronics,39.99,2021-08-18,PowerTech
+10,Silk Scarf Designer,Accessories,54.99,2021-09-02,LuxeFashion
+11,Running Shoes Performance,Sports & Outdoors,119.99,2021-09-16,SpeedRun
+12,Indoor Plant Succulent,Home & Garden,12.99,2021-10-01,GreenThumb
+13,Laptop Sleeve Protective,Electronics,29.99,2021-10-15,TechGuard
+14,Wool Sweater Knit,Clothing,79.99,2021-11-01,CozyKnits
+15,Sunglasses Polarized,Accessories,45.99,2021-11-12,SunShield
+16,Resistance Bands Set,Sports & Outdoors,24.99,2021-11-28,FlexFit
+17,Bamboo Cutting Board,Home & Garden,35.99,2021-12-10,EcoKitchen
+18,Bluetooth Speaker Portable,Electronics,59.99,2021-12-22,SoundWave
+19,Casual Button-Down Shirt,Clothing,44.99,2022-01-08,ClassicWear
+20,Watch Band Leather,Accessories,19.99,2022-01-20,TimeStyle
+21,Dumbbells Adjustable,Sports & Outdoors,89.99,2022-02-03,PowerLift
+22,Essential Oil Diffuser,Home & Garden,49.99,2022-02-17,AromaZen
+23,Smartphone Case Rugged,Electronics,24.99,2022-03-01,PhoneShield
+24,Maxi Dress Floral,Clothing,64.99,2022-03-15,FloralFashion
+25,Baseball Cap Vintage,Accessories,22.99,2022-03-28,RetroStyle
+26,Tennis Racket Professional,Sports & Outdoors,159.99,2022-04-10,ProSport
+27,Throw Pillow Decorative,Home & Garden,18.99,2022-04-22,HomeDeco
+28,USB-C Cable Braided,Electronics,14.99,2022-05-05,CableTech
+29,Polo Shirt Classic,Clothing,39.99,2022-05-18,SportsCasual
+30,Wallet Minimalist,Accessories,34.99,2022-06-01,SlimLine
+31,Camping Tent 2-Person,Sports & Outdoors,199.99,2022-06-14,OutdoorPro
+32,Candle Set Aromatherapy,Home & Garden,27.99,2022-06-28,RelaxScents
+33,Tablet Stand Adjustable,Electronics,19.99,2022-07-10,TabletPro
+34,Hoodie Pullover,Clothing,54.99,2022-07-23,ComfortWear
+35,Keychain Multitool,Accessories,12.99,2022-08-05,ToolCraft
+36,Basketball Official,Sports & Outdoors,29.99,2022-08-18,CourtKing
+37,Picture Frame Set,Home & Garden,24.99,2022-09-01,MemoryKeep
+38,Power Bank Portable,Electronics,34.99,2022-09-14,ChargeMax
+39,Cardigan Lightweight,Clothing,49.99,2022-09-27,LayerStyle
+40,Bracelet Silver Chain,Accessories,39.99,2022-10-10,SilverCraft
+41,Golf Club Driver,Sports & Outdoors,249.99,2022-10-23,GolfPro
+42,Desk Lamp LED,Home & Garden,42.99,2022-11-05,BrightWork
+43,Earbuds Noise-Canceling,Electronics,89.99,2022-11-18,QuietSound
+44,Blazer Formal,Clothing,99.99,2022-12-01,BusinessWear
+45,Necklace Pendant,Accessories,29.99,2022-12-14,JewelCraft
+46,Soccer Ball Official,Sports & Outdoors,24.99,2022-12-27,FieldKing
+47,Vase Ceramic Modern,Home & Garden,36.99,2023-01-09,ModernHome
+48,Gaming Mouse Wireless,Electronics,44.99,2023-01-22,GameTech
+49,Sweatpants Comfortable,Clothing,34.99,2023-02-04,ComfortFit
+50,Belt Genuine Leather,Accessories,42.99,2023-02-17,LeatherCraft
+51,Hiking Boots Waterproof,Sports & Outdoors,149.99,2023-03-02,TrailMaster
+52,Kitchen Scale Digital,Home & Garden,31.99,2023-03-15,PrecisionCook
+53,Webcam HD 1080p,Electronics,69.99,2023-03-28,VideoTech
+54,Midi Skirt A-Line,Clothing,44.99,2023-04-10,TrendyWear
+55,Hair Clip Set,Accessories,15.99,2023-04-23,StyleHair
+56,Badminton Set Complete,Sports & Outdoors,79.99,2023-05-06,RacketSport
+57,Wall Clock Modern,Home & Garden,28.99,2023-05-19,TimeKeep
+58,Keyboard Mechanical,Electronics,119.99,2023-06-01,TypeMaster
+59,Tank Top Basic,Clothing,16.99,2023-06-14,EssentialWear
+60,Phone Ring Holder,Accessories,9.99,2023-06-27,GripTech
